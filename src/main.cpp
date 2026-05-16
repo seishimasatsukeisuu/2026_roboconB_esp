@@ -66,17 +66,18 @@ void loop()
     {
       constexpr float INV_SQRT2 = 0.70710678f;
       int rot = (l2 - r2);
+      float gain = 20.0f;
 
-      int v1 = (-lx + ly) * INV_SQRT2 + rot;
-      int v2 = (lx + ly) * INV_SQRT2 + rot;
-      int v3 = (lx - ly) * INV_SQRT2 + rot;
-      int v4 = (-lx - ly) * INV_SQRT2 + rot;
+      float v1 = ((-lx + ly) * INV_SQRT2 + rot) * gain;
+      float v2 = ((lx + ly) * INV_SQRT2 + rot) * gain;
+      float v3 = ((lx - ly) * INV_SQRT2 + rot) * gain;
+      float v4 = ((-lx - ly) * INV_SQRT2 + rot) * gain;
 
-      int v[4] = {v1, v2, v3, v4};
+      float v[4] = {v1, v2, v3, v4};
 
       for (int i = 0; i < 4; i++)
       {
-        motor[i] = constrain(v[i], -2999, 2999);
+        motor[i] = (int16_t)constrain(v[i], -2999, 2999);
       }
     }
   }
